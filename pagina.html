@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLápiz 🌱 Escribe, Planta, Crece</title>
+    <style>
+        /* Variables CSS para colores */
+        :root {
+            --verde-principal: #4CAF50; /* Un verde vibrante para destacar */
+            --verde-oscuro: #2E7D32;   /* Un verde más profundo para textos y hover */
+            --tierra: #8D6E63;         /* Un color tierra para el footer */
+            --fondo-claro: #F9FBE7;    /* Un fondo cremoso/verde muy claro */
+            --texto-oscuro: #333333;   /* Color principal del texto */
+            --gris-claro: #EEEEEE;     /* Para bordes o separadores suaves */
+        }
+
+        /* Estilos Generales del Cuerpo */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--fondo-claro);
+            color: var(--texto-oscuro);
+            line-height: 1.6;
+            scroll-behavior: smooth; /* Desplazamiento suave al hacer clic en enlaces */
+        }
+
+        /* Encabezado y Navegación */
+        header {
+            background-color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky; /* Se queda fijo al hacer scroll */
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--verde-oscuro);
+        }
+
+        nav a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: var(--texto-oscuro);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--verde-principal);
+        }
+
+        /* Sección Hero (Inicio) */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1515847049116-ea4c6ce11000?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTc2MDJ8MHwxfHNlYXJjaHw1fHxlY29wZW5jaWwlMjBsYW5kaW5nJTIwcGFnZSUyMGJhY2tncm91bmR8ZW58MHx8fHwxNjk5NDQ1NDY2fDA&ixlib=rb-4.0.3&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 10%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 500px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .btn-principal {
+            background-color: var(--verde-principal);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px; /* Botón redondeado */
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-principal:hover {
+            background-color: var(--verde-oscuro);
+            transform: translateY(-3px); /* Pequeño efecto al pasar el ratón */
+        }
+
+        /* Secciones Generales */
+        .section {
+            padding: 80px 10%;
+            text-align: center;
+            background-color: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .section:nth-of-type(odd) { /* Estilo alterno para secciones */
+            background-color: var(--fondo-claro);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--verde-oscuro);
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        h2::after { /* Subrayado decorativo para títulos */
+            content: '';
+            display: block;
+            width: 70%;
+            height: 4px;
+            background-color: var(--verde-principal);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Escáner de Plantas */
+        #escaner {
+            background-color: #e8f5e9; /* Un verde claro específico para el escáner */
+            border: 3px dashed var(--verde-principal);
+            padding: 60px 10%;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        .scanner-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .scanner-box p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        #fileInput {
+            display: none; /* Oculta el input de archivo por defecto */
+        }
+
+        .btn-scan {
+            background-color: var(--verde-oscuro);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-scan:hover {
+            background-color: var(--verde-principal);
+            transform: translateY(-3px);
+        }
+
+        #resultadoScan {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--fondo-claro);
+            border-left: 5px solid var(--verde-principal);
+            text-align: left;
+            border-radius: 8px;
+            display: none; /* Se oculta hasta que se muestre el resultado */
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #resultadoScan h3 {
+            color: var(--verde-oscuro);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Sección de Compra y Venta (Tienda) */
+        .tienda-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .producto-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .producto-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .producto-card h3 {
+            color: var(--verde-oscuro);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .producto-card p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .precio {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--verde-principal);
+            margin-bottom: 20px;
+        }
+
+        /* Pie de Página (Footer y Redes Sociales) */
+        footer {
+            background-color: var(--tierra);
+            color: white;
+            padding: 60px 10%;
+            text-align: center;
+            margin-top: 40px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        footer h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--verde-principal);
+        }
+
+        /* Media Queries para Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem 3%;
+            }
+            nav {
+                margin-top: 15px;
+            }
+            nav a {
+                margin: 0 10px;
+                display: block; /* Cada enlace en su propia línea */
+                padding: 5px 0;
+            }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .section { padding: 50px 5%; }
+            h2 { font-size: 2rem; }
+            .scanner-box { padding: 25px; }
+            .tienda-grid { grid-template-columns: 1fr; } /* Una columna en móviles */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">🌱 EcoLápiz</div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#escaner">Escáner</a>
+            <a href="#tienda">Tienda</a>
+            <a href="#contacto">Redes Sociales</a>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <h1>¡Escribe el Futuro, Planta una Vida!</h1>
+        <p>Descubre el lápiz revolucionario hecho de papel periódico reciclado, con una cápsula de semillas y goma incorporada. Cuando termines de escribir, ¡siembra tu lápiz y mira cómo crece una planta!</p>
+        <a href="#tienda" class="btn-principal">Explora Nuestros Productos</a>
+    </section>
+
+    <section class="section">
+        <h2>¿Por qué nuestro EcoLápiz es el mejor?</h2>
+        <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+            <p>En **EcoLápiz**, no solo te ofrecemos una herramienta de escritura de alta calidad, sino que también te invitamos a ser parte de una solución ambiental:</p>
+            <ul>
+                <li>**Sostenible:** Fabricado con papel periódico 100% reciclado, nuestro lápiz reduce la tala de árboles y disminuye la huella de carbono.</li>
+                <li>**Innovador:** Cada lápiz incluye una **cápsula biodegradable con semillas** en su extremo. Una vez que el lápiz es demasiado corto para usar, simplemente plántalo y ¡mira cómo florece una nueva vida!</li>
+                <li>**Funcional:** No sacrificamos la utilidad. Nuestros lápices cuentan con una **goma de borrar de caucho natural** en la parte superior de la cápsula, lista para cumplir su función.</li>
+                <li>**Doble Impacto:** Escribes y, al mismo tiempo, contribuyes a reforestar el planeta, fomentando la conciencia ecológica.</li>
+            </ul>
+            <p>¡Elige EcoLápiz y transforma tu rutina en un acto de amor por la naturaleza!</p>
+        </div>
+    </section>
+
+    <section id="escaner" class="section">
+        <h2>🔬 Escáner de Plantas Inteligente</h2>
+        <div class="scanner-box">
+            <p>¿Tienes una planta y no sabes cómo cuidarla? ¡Sube una foto y nuestro escáner te dirá su especie y los cuidados necesarios!</p>
+            <input type="file" id="fileInput" accept="image/*">
+            <button class="btn-scan" onclick="document.getElementById('fileInput').click()">📸 Iniciar Escáner</button>
+            
+            <div id="resultadoScan" style="display: none;">
+                <h3>Resultado del Análisis:</h3>
+                <p><strong>Especie:</strong> <span id="plantaNombre"></span></p>
+                <p><strong>Cuidados:</strong> <span id="plantaCuidados"></span></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tienda" class="section">
+        <h2>🛍️ Compra Nuestros EcoLápices</h2>
+        <div class="tienda-grid">
+            
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1601004996901-49b01ae0c354?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTc2MDJ8MHwxfHNlYXJjaHwyfHxlY29wZW5jaWwlMjBwYWNrYWdlfGVufDB8fHx8MTY5OTQ0NjM3MHww&ixlib=rb-4.0.3&q=80&w=400" alt="Pack de EcoLápices">
+                <h3>Pack "Semillas Variadas"</h3>
+                <p>Un surtido de 5 EcoLápices con semillas de albahaca, cilantro, tomate cherry, manzanilla y girasol.</p>
+                <div class="precio">$14.99</div>
+                <button class="btn-principal" style="width: 100%;">Añadir al Carrito</button>
+            </div>
+
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1596728076044-8d9e60517852?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTc2MDJ8MHwxfHNlYXJjaHwyfHxlY29wZW5jaWwlMjBmbG93ZXIlMjBzZWVkfGVufDB8fHx8MTY5OTQ0NjM3NXww&ixlib=rb-4.0.3&q=80&w=400" alt="EcoLápiz Individual Flores">
+                <h3>EcoLápiz "Jardín Floral"</h3>
+                <p>Lápiz individual con semillas de flores silvestres. Ideal para regalar o para tu escritorio.</p>
+                <div class="precio">$3.99</div>
+                <button class="btn-principal" style="width: 100%;">Añadir al Carrito</button>
+            </div>
+
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1549418659-195c1044358a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTc2MDJ8MHwxfHNlYXJjaHwzfHxlY29wZW5jaWwlMjB2ZWdhYmxlJTIwZ3Jvd2luZ3xlbnwwfHx8fDE2OTk0NDY1MDB8MA&ixlib=rb-4.0.3&q=80&w=400" alt="Set de Regalo EcoLápiz">
+                <h3>Set de Regalo "Mi Primer Huerto"</h3>
+                <p>3 EcoLápices de vegetales, pequeña maceta biodegradable y pastilla de tierra compactada.</p>
+                <div class="precio">$24.99</div>
+                <button class="btn-principal" style="width: 100%;">Añadir al Carrito</button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <h3>¡Únete a nuestra Comunidad Eco!</h3>
+        <p>Síguenos en nuestras redes sociales para estar al tanto de novedades, consejos de siembra y promociones.</p>
+        <div class="social-links">
+            <a href="https://facebook.com/ecolapiz" target="_blank">Facebook</a> | 
+            <a href="https://instagram.com/ecolapiz" target="_blank">Instagram</a> | 
+            <a href="https://twitter.com/ecolapiz" target="_blank">Twitter</a> |
+            <a href="https://tiktok.com/@ecolapiz" target="_blank">TikTok</a>
+        </div>
+        <p style="margin-top: 30px;">&copy; 2023 EcoLápiz. Todos los derechos reservados. Creando un futuro más verde.</p>
+    </footer>
+
+    <script>
+        // Lógica para simular el escáner de plantas
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const resultadoDiv = document.getElementById('resultadoScan');
+            const plantaNombreSpan = document.getElementById('plantaNombre');
+            const plantaCuidadosSpan = document.getElementById('plantaCuidados');
+
+            if (this.files && this.files[0]) {
+                resultadoDiv.style.display = 'block';
+                plantaNombreSpan.textContent = 'Analizando...';
+                plantaCuidadosSpan.textContent = 'Por favor, espera.';
+
+                // Simulación de una llamada a una API o proceso de análisis
+                setTimeout(() => {
+                    // Aquí podrías tener lógica más compleja o una API real
+                    const nombreFicticio = "Menta Piperita";
+                    const cuidadosFicticios = "Necesita luz indirecta brillante, suelo húmedo pero bien drenado. Podar regularmente para fomentar el crecimiento. Ideal para infusiones.";
+
+                    plantaNombreSpan.textContent = nombreFicticio;
+                    plantaCuidadosSpan.textContent = cuidadosFicticios;
+                }, 2000); // Simula un retraso de 2 segundos para el análisis
+            }
+        });
+    </script>
+
+</body>
+</html>
